@@ -16,7 +16,8 @@ int main() {
   int total_lines_read = 0;
 	long int *list_of_longs;
 	long int *current_long;
-	int i;
+	int i,j;
+  long int first, second;
 
   const unsigned char* name = "advent-20-01,s,r";
 
@@ -65,7 +66,14 @@ int main() {
   cbm_k_close( lfn );
 
 	for(i=0; i < total_lines_read; i++ ) {
-		printf( "%ld\n", get_nth_long(list_of_longs, i) );
+		//printf( "%ld\n", get_nth_long(list_of_longs, i) );
+    first = get_nth_long(list_of_longs, i);
+    for (j=0; j < total_lines_read; j++) {
+      second = get_nth_long(list_of_longs, j);
+      if (first + second == 2020) {
+        printf("%ld,%ld,%ld\n", first, second, first * second);
+      }
+    }
 	}
 
   printf("\n");
