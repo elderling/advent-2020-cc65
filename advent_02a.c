@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <cbm.h>
+#include <string.h>
 
 long int get_nth_long( long int *the_longs, int n );
 
@@ -12,6 +13,8 @@ int main() {
   unsigned char string_position, lfn, open_result, chkin_result, bytes_read, data;
   unsigned char the_string[32];
   int total_lines_read = 0;
+  signed char min, max, count, the_rest;
+  unsigned char *min_str, *max_str, *count_str, *the_rest_str;
 
   const unsigned char* name = "advent-20-02,s,r";
 
@@ -39,8 +42,13 @@ int main() {
       if ( data == 0x0d ) {
           the_string[string_position] = 0;
 
+          min_str = strtok(the_string, "-");
+
+          the_rest_str = strtok(NULL, "-");
           total_lines_read++;
-          printf("%s\n", the_string);
+          //printf("%s\n", the_string);
+          printf("min is %s\n", min_str);
+          printf("the_rest is %s\n", the_rest_str);
 
           string_position = 0;
       }
