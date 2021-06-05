@@ -14,7 +14,7 @@ int main() {
   unsigned char the_string[32];
   int total_lines_read = 0;
   signed char min, max, count, the_rest;
-  unsigned char *min_str, *max_str, *count_str, *the_rest_str;
+  unsigned char *min_str, *max_str, *count_str, *the_rest_str, *the_range_str, *the_letter_str, *the_password_str, the_letter;
 
   const unsigned char* name = "advent-20-02,s,r";
 
@@ -42,13 +42,33 @@ int main() {
       if ( data == 0x0d ) {
           the_string[string_position] = 0;
 
-          min_str = strtok(the_string, "-");
+          the_range_str = strtok(the_string, " ");
+          //printf("Range: %s\n", the_range_str);
+          the_letter_str = strtok(NULL, " ");
+          the_password_str = strtok(NULL, " ");
 
-          the_rest_str = strtok(NULL, "-");
+          min_str = strtok(the_range_str, "-");
+          max_str = strtok(NULL, "-");
+
+          min = atoi(min_str);
+          max = atoi(max_str);
+          printf("range: %d-%d", min, max);
+          the_letter = the_letter_str[0];
+          printf(" letter: %c\n", the_letter);
+          printf("password: %s\n", the_password_str);
+          printf("\n");
+
+
+
           total_lines_read++;
           //printf("%s\n", the_string);
-          printf("min is %s\n", min_str);
-          printf("the_rest is %s\n", the_rest_str);
+          //printf("min is %s\n", min_str);
+          //printf("the_rest is %s\n", the_rest_str);
+
+          //max_str = strtok(the_rest_str, " ");
+
+          //the_rest_str =  strtok(NULL, "-");
+
 
           string_position = 0;
       }
