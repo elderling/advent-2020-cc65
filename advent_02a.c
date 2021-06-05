@@ -3,11 +3,24 @@
 #include <cbm.h>
 #include <string.h>
 
-long int get_nth_long( long int *the_longs, int n );
+unsigned char count_char_in_string( unsigned char the_char, char the_string[] );
 
-long int get_nth_long( long int *the_longs, int n ) {
-  return *(the_longs + n * sizeof(long int));
+unsigned char count_char_in_string( unsigned char the_char, char the_string[] ) {
+  unsigned char *current_char, total;
+
+  total = 0;
+  current_char = the_string;
+
+  while ( *current_char != 0 ) {
+    if ( *current_char == the_char ) {
+      total++;
+    }
+    current_char++;
+  }
+
+  return total;
 }
+
 
 int main() {
   unsigned char string_position, lfn, open_result, chkin_result, bytes_read, data;
@@ -32,6 +45,7 @@ int main() {
 
   //printf("chkin_result = '%d'", chkin_result);
 
+  count = 0;
   the_string[0] = 0;
   string_position = 0;
   do {
@@ -52,10 +66,12 @@ int main() {
 
           min = atoi(min_str);
           max = atoi(max_str);
-          printf("range: %d-%d", min, max);
+          printf("range: %d-%d\n", min, max);
           the_letter = the_letter_str[0];
-          printf(" letter: %c\n", the_letter);
-          printf("password: %s\n", the_password_str);
+
+          //printf("password: %s\n", the_password_str);
+          count = count_char_in_string( the_letter, the_password_str );
+          printf("letter %c appears in %s %d times", the_letter, the_password_str, count);
           printf("\n");
 
 
