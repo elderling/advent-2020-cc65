@@ -26,8 +26,9 @@ int main() {
   unsigned char string_position, lfn, open_result, chkin_result, bytes_read, data;
   unsigned char the_string[32];
   int total_lines_read = 0;
-  signed char min, max, count, the_rest;
-  unsigned char *min_str, *max_str, *count_str, *the_rest_str, *the_range_str, *the_letter_str, *the_password_str, the_letter;
+  int total_valid_passwords = 0;
+  signed char min, max, count;
+  unsigned char *min_str, *max_str, *the_range_str, *the_letter_str, *the_password_str, the_letter;
 
   const unsigned char* name = "advent-20-02,s,r";
 
@@ -73,8 +74,9 @@ int main() {
           count = count_char_in_string( the_letter, the_password_str );
           printf("letter %c appears in %s %d times", the_letter, the_password_str, count);
           printf("\n");
-
-
+          if ( count >= min && count <= max ) {
+            total_valid_passwords++;
+          }
 
           total_lines_read++;
           //printf("%s\n", the_string);
@@ -100,6 +102,7 @@ int main() {
 
   printf("\n");
   printf("Total lines read = %d", total_lines_read);
+  printf("Total valid passwords = %d", total_valid_passwords);
 
   return 0;
 }
