@@ -13,17 +13,10 @@ unsigned char is_char_at_index( unsigned char the_char, unsigned char index, uns
   return 0;
 }
 
-int main() {
-  unsigned char string_position, lfn, open_result, chkin_result, bytes_read, data;
-  unsigned char the_string[32];
-  int total_lines_read = 0;
-  int total_valid_passwords = 0;
-  signed char min, max, count;
-  unsigned char *min_str, *max_str, *the_range_str, *the_letter_str, *the_password_str, the_letter;
+unsigned char aoc_open_file(const unsigned char name[], unsigned int lfn);
 
-  const unsigned char* name = "advent-20-02,s,r";
-
-  lfn = 1;
+unsigned char aoc_open_file(const unsigned char name[], unsigned int lfn) {
+  unsigned char open_result,chkin_result;
 
   open_result = cbm_open( lfn, 8, 0, name );
 
@@ -36,6 +29,22 @@ int main() {
   chkin_result = cbm_k_chkin( lfn );
 
   //printf("chkin_result = '%d'", chkin_result);
+  return 0;
+}
+
+int main() {
+  unsigned char string_position, lfn, bytes_read, data, result;
+  unsigned char the_string[32];
+  int total_lines_read = 0;
+  int total_valid_passwords = 0;
+  signed char min, max, count;
+  unsigned char *min_str, *max_str, *the_range_str, *the_letter_str, *the_password_str, the_letter;
+
+  const unsigned char* name = "advent-20-02,s,r";
+
+  lfn = 1;
+
+  result = aoc_open_file( name, lfn );
 
   count = 0;
   the_string[0] = 0;
