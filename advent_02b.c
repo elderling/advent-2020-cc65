@@ -83,6 +83,16 @@ int main() {
       position_two = atoi(position_two_str);
       printf("positions: %d-%d\n", position_one, position_two);
       the_letter = the_letter_str[0];
+
+      if ( the_password_str[position_one - 1] == the_letter 
+            && the_password_str[position_two -1] != the_letter ) {
+        total_valid_passwords++;
+      }
+      else if ( the_password_str[position_one - 1] != the_letter 
+                && the_password_str[position_two -1] == the_letter )  {
+        total_valid_passwords++;
+      }
+
       total_lines_read++;
       //printf( "%s\n", the_string );
     }
