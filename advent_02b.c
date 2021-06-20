@@ -60,6 +60,8 @@ int main() {
   int total_lines_read = 0;
   int total_valid_passwords = 0;
   char how_many;
+  signed char position_one, position_two;
+  char *position_one_str, *position_two_str, *the_range_str, *the_letter_str, *the_password_str, the_letter;
 
   const char* name = "advent-20-02,s,r";
 
@@ -70,8 +72,19 @@ int main() {
   do {
     gimme_a_line( lfn, the_string, &how_many );
     if (strlen(the_string) > 0) {
+      the_range_str = strtok(the_string, " ");
+      the_letter_str = strtok(NULL, " ");
+      the_password_str = strtok(NULL, " ");
+
+      position_one_str = strtok(the_range_str, "-");
+      position_two_str = strtok(NULL, "-");
+
+      position_one = atoi(position_one_str);
+      position_two = atoi(position_two_str);
+      printf("positions: %d-%d\n", position_one, position_two);
+      the_letter = the_letter_str[0];
       total_lines_read++;
-      printf( "%s\n", the_string );
+      //printf( "%s\n", the_string );
     }
   }
   while ( strlen(the_string) > 0 );
