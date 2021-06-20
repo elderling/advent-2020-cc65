@@ -1,12 +1,18 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <cbm.h>
+#include <peekpoke.h>
+
+// Change this to 0x9C00 if that's where the clock is
+#define RTC_BASE 0x9800
 
 long int get_nth_long( long int *the_longs, int n );
 
 long int get_nth_long( long int *the_longs, int n ) {
   return *(the_longs + n * sizeof(long int));
 }
+
+void print_time();
 
 int main() {
   unsigned char string_position, lfn, open_result, chkin_result, bytes_read, data;
@@ -20,6 +26,9 @@ int main() {
   long int first, second, third;
 
   const unsigned char* name = "advent-20-01,s,r";
+
+  printf("Start Time:");
+  print_time();
 
 	list_of_longs = (long int*)malloc(200 * sizeof(long int));
 
@@ -66,7 +75,7 @@ int main() {
   cbm_k_close( lfn );
 
 	for(i=0; i < total_lines_read; i++ ) {
-		printf( "%ld\n", get_nth_long(list_of_longs, i) );
+		//printf( "%ld\n", get_nth_long(list_of_longs, i) );
     first = get_nth_long(list_of_longs, i);
     for (j=0; j < total_lines_read; j++) {
       second = get_nth_long(list_of_longs, j);
@@ -82,6 +91,20 @@ int main() {
   printf("\n");
   printf("'%s'", name);
   printf("Total lines read = %d", total_lines_read);
+  printf("End Time:");
+  print_time();
 
   return 0;
+}
+
+void print_time() {
+  char hour, minute, second;
+  POKE(RTC_BASE, 0x04);
+  hour = PEEK( RTC_BASE + 1 );
+  POKE(RTC_BASE, 0x02);
+  minute = PEEK( RTC_BASE + 1 );
+  POKE(RTC_BASE, 0x00);
+  second = PEEK( RTC_BASE + 1 );
+
+  printf("%x,%x,%x\n", hour, minute, second);
 }
