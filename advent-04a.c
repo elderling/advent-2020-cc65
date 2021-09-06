@@ -2,6 +2,15 @@
 #include <stdio.h>
 #include <cbm.h>
 #include <string.h>
+#include <stdint.h>
+
+typedef struct {
+  char * key;
+  char * value;
+} Key_Value_Pair_t;
+
+char * themStrings[8];
+uint8_t themStringsDepth = 0;
 
 void gimme_a_line( char lfn, char *put_it_here, char *how_many );
 
@@ -58,6 +67,10 @@ int main() {
   char the_string[128];
   int total_lines_read = 0;
   char how_many = 0;
+  char * the_token;
+  char * delimiter = " ";
+  uint8_t i;
+  char * new_string;
 
   const char* name = "advent-20-04,s,r";
 
@@ -69,7 +82,38 @@ int main() {
     gimme_a_line( lfn, the_string, &how_many );
     if ( how_many > 0) {
       total_lines_read++;
-      printf( "%d\n", how_many );
+
+      if ( how_many > 1 ) {
+        the_token = strtok( the_string, delimiter );
+
+        new_string = malloc( strlen( the_token ) );
+        strcpy(new_string, the_token);
+        themStrings[themStringsDepth] = new_string;
+        themStringsDepth++;
+        while ( the_token = strtok( NULL, delimiter ) )  {
+          //printf("%s\n", the_token);
+          new_string = malloc( strlen( the_token ) );
+          strcpy(new_string, the_token);
+          themStrings[themStringsDepth] = new_string;
+          themStringsDepth++;
+        }
+      } else {
+        //do something with themStrings
+        for (i = 0; i < themStringsDepth; i++ ) {
+          printf("%s\n", themStrings[i]);
+          free( themStrings[i] );
+        }
+        themStringsDepth = 0;
+        printf("\n");
+      }
+    } else {
+        //do something with themStrings
+        for (i = 0; i < themStringsDepth; i++ ) {
+          printf("%s\n", themStrings[i]);
+          free( themStrings[i] );
+        }
+        themStringsDepth = 0;
+        printf("\n");
     }
   }
   while ( how_many > 0 );
