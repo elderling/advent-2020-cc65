@@ -3,9 +3,13 @@
 #include <cbm.h>
 #include <string.h>
 
+#define TREE '#'
+#define NO_TREE '.'
+
 void gimme_a_line( char lfn, char *put_it_here, char *how_many );
 
 char aoc_open_file(const char name[], unsigned int lfn);
+char wraparound_char_at(unsigned int index, char *theString);
 
 char aoc_open_file(const char name[], unsigned int lfn) {
  char open_result,chkin_result;
@@ -54,11 +58,18 @@ void gimme_a_line( char lfn, char *put_it_here, char *how_many ) {
   return;
 }
 
+char wraparound_char_at(unsigned int index, char *theString)
+{
+  return theString[index % 31];
+}
+
 int main() {
   char lfn, result;
   char the_string[32];
   int total_lines_read = 0;
   char how_many;
+  unsigned int total_trees = 0;
+  unsigned int x_axis = 0;
 
   const char* name = "advent-20-03,s,r";
 
@@ -70,7 +81,15 @@ int main() {
     gimme_a_line( lfn, the_string, &how_many );
     if (strlen(the_string) > 0) {
       total_lines_read++;
-      printf( "%s\n", the_string );
+      if ( wraparound_char_at(x_axis, the_string) == TREE ) {
+        printf("TREE at %d!\n", x_axis);
+        total_trees++;
+      }
+      else {
+        printf("NO_TREE at %d!\n", x_axis);
+      }
+      x_axis = x_axis + 3;
+      //printf( "%s\n", the_string );
     }
   }
   while ( strlen(the_string) > 0 );
@@ -78,6 +97,7 @@ int main() {
   cbm_k_close( lfn );
 
   printf("Total lines read = %d", total_lines_read);
+  printf("Total trees = %d", total_trees);
 
   return 0;
 }
